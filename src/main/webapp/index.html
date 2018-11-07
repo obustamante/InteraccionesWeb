@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Interacciones</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!--CSS-->
+    <link rel="stylesheet" href=css/bootstrap_4/bootstrap.min.css>
+    <link rel="stylesheet" href="css/jquery_flexdatalist_2_2_4/jquery_flexdatalist_min.css">
+    <link rel="stylesheet" href="css/estilo.css">
+
+    <!-- JS -->
+    <script type="text/javascript" src="js/jquery/jquery-3.3.1.min.js" language="JavaScript"></script>
+    <script type="text/javascript" src="js/jquery_flexdatalist_2_2_4/jquery.flexdatalist.js"
+            language="JavaScript"></script>
+    <script type="text/javascript" src="js/jquery.json-2.4.min.js"></script>
+
+    <script>
+
+        var codigos = [];
+        var cont = 0;
+
+        $(function () {
+
+            $(".flexdatalist").flexdatalist({
+                minLength: 1
+            });
+
+            var $input = $('.flexdatalist');
+
+            // Update vista de valor
+            var updateValueView = function ($target) {
+                $target.each(function () {
+
+                    console.log($(this).val());
+
+                    $('#agregar-medicamento').data('id', $(this).val());
+                    $('#prueba').val($(this).val());
+
+                    //muestra debajo de input text el valor del id del medicamento
+                    $(this).parent().find('.input-value span').html('<code>' + $(this).val() + '</code>');
+                });
+            };
+
+            updateValueView($input);
+
+            $input
+                .on('select:flexdatalist', function () {
+                    console.log('Medicamento seleccionado!');
+                    $('#button-agregar').prop('disabled', false);
+                })
+                .on('change:flexdatalist', function (e, set) {
+                    console.log('--- #' + $(this).attr('name') + ' ---');
+                    console.log('Set valor: ' + set.value);
+                    console.log('Set texto: ' + set.text);
+                    updateValueView($(this));
+                })
+
+
+            $('#button-agregar').prop('disabled', true);
+            console.log('Página lista.');
+        });
+
+        function agregarMedicamento() {
+            console.log('Medicamento a adicionar: ID ' + $('#prueba').val());
+
+            codigos.push($('#prueba').val());
+
+
+            //TODO llama al servicio
+            //URL
+            var url = "http://localhost:8080/interaccionesWeb/rest/api/Medicamento/getComparaMedicamento"
+
+            var data_ = {
+                'idcodigoinvima': codigos
+            };
+
+            var parametros = 'data=' + $.toJSON(data_);
+
+            $.get(url, parametros, function (data, status) {
+                //hideWaitScreen();
+                waitStop();
+
+                if (data.result == "OK") {
+                    console.log('result == "OK"');
+                } else {
+                    console.log("Usuario no encontrado");
+                }
+            }).always(function () {
+                console.log('always(function ())');
+            });
+
+
+            console.log(codigos);
+
+            cont += 1;
+
+            console.log('Agrega elemento a la tabla');
+            $('#tablaMedicamentos >tbody:last-child').append("<tr><td> " + cont + " - " + $('#prueba').val() + "</td><td>NombreDelMedicamento</td><td>CodigoATC</td> </tr>");
+
+            console.log('Deshabilitar - boton-agregar');
+            $('#button-agregar').prop('disabled', true);
+
+
+            clearInput();
+
+        }
+
+        //Limpiar campo de busqueda
+        function clearInput() {
+            console.log('Limpiar campo de busqueda...');
+            $('#medicamentos').val("");
+        }
+
+        //Limpia los datos en la tabla
+        function clearTable() {
+            $("#tbodyMedicamentos").empty();
+            cont = 0;
+        }
+
+
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+    <div class="jumbotron" style="background-color:#BADAFE">
+        <h1>INTERACCIONES MEDICAMENTOSAS
+            <small>(USC)</small>
+        </h1>
+        <p>Consulta de medicamentos.</p>
+    </div>
+
+    <label>Ingrese un medicamento:</label>
+    <div class="row">
+        <div class="col-8">
+            <div class="form-group">
+                <!--<label for="med">Ingrese un medicamento:</label>-->
+
+                <input type="text"
+                       class="flexdatalist form-control"
+                       name="my_input"
+                       data-url="http://localhost:8080/interaccionesWeb/rest/api/Medicamento/getMedicamento"
+                       datatype="json"
+                       data-request-type="get"
+                       data-min-length="1"
+                       data-search-in="nombre"
+                       data-visible-properties='["nombre","atc"]'
+                       data-value-property='idcodigoinvima'
+                       noResultsText='No se encontraron resultados para "{keyword}"'
+                       placeholder="Medicamentos"
+                       id="medicamentos">
+
+                <p class="input-value text-muted">
+                    <small>Valor ID</small>
+                    <span></span></p>
+
+            </div>
+        </div>
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-primary" onclick="agregarMedicamento();" id="button-agregar">Agregar
+            </button>
+            <input type="hidden" id="prueba" value="0">
+        </div>
+        <div class="col-md-auto">
+            <button type="button" class="btn btn-secondary" onclick="clearInput();" id="button-clear">Limpiar</button>
+        </div>
+    </div>
+    <!--
+    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    -->
+    <br/>
+    <!--
+    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    -->
+    <div class="table table-responsive  table-sm">
+        <table class="table table-hover table-bordered" id="tablaMedicamentos">
+            <thead>
+            <tr style="background-color: silver;">
+                <th style="width: 6%;">#</th>
+                <th>Medicamento</th>
+                <th style="width: 10%;">Código ATC‎</th>
+            </tr>
+            </thead>
+            <tbody id="tbodyMedicamentos">
+            <tr>
+                <td>1</td>
+                <td>Aspirina</td>
+                <td>B01AC06</td>
+            </tr>
+
+            <tr>
+                <td>2</td>
+                <td>Ibuprofeno</td>
+                <td>B01AC06</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+    <!--
+    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    -->
+    <button type="button" class="btn btn-primary" onclick="clearTable();" id="button-clearTbody">Limpiar Tabla</button>
+    <!--
+    -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
+    -->
+    <br/>
+    <!--
+        <div class="alert alert-success">
+            <strong>Correcto!</strong> no existen interacciones entre los medicamentos de la lista.
+        </div>
+
+
+    --------------------------------------------------------------------------------------------------------------
+
+    <div class="alert alert-warning">
+        <strong>Advertencia!</strong> Existen medicamentos con interacciones media(s) o leve(s).
+    </div>
+
+    <dl>
+        <dt>Interaccion Media o Leve</dt>
+        <dd>- la aspirina y el ibuprofeno aumentan la anticoagulación. Use Precaución / Monitor. -a aspirina y el
+            ibuprofeno aumentan el potasio sérico. Use Precaución / Monitor.
+        </dd>
+        <dd>- La aspirina aumentará el nivel o el efecto del ibuprofeno mediante la competencia de fármacos ácidos
+            (aniónicos) para el aclaramiento tubular renal. Menor / Significado Desconocido.
+        </dd>
+    </dl>
+
+
+    <div class="alert alert-danger">
+        <strong>Peligro!</strong> Existen medicamentos con interacciones gaves.
+    </div>
+
+    <dl>
+        <dt>Interaccion Grave</dt>
+        <dd>- El ibuprofeno aumenta la toxicidad de la aspirina mediante la anticoagulación. Evite o use drogas
+            alternativas. aumenta el riesgo de hemorragia.
+        </dd>
+        <dd>- El ibuprofeno disminuye los efectos de la aspirina en Otro (ver comentario). Evite o use drogas
+            alternativas. Comentario: El ibuprofeno disminuye los efectos antiplaquetarios de la aspirina en dosis bajas
+            al bloquear el sitio activo de la ciclooxigenasa de las plaquetas. Administre ibuprofeno 8 h antes de la
+            aspirina o al menos 2-4 h después de la aspirina. El efecto de otros AINE sobre la aspirina no está
+            establecido.
+        </dd>
+    </dl>
+ -->
+
+
+</div>
+
+<br>
+<!-- Footer -->
+<footer class="page-footer font-small blue">
+    <!-- Copyright -->
+    <div class="footer-copyright text-center py-3">
+        <small>© 2018 Copyright:
+            <a href="https://mdbootstrap.com/bootstrap-tutorial/"> Oscar E. Bustamante R.</a></small>
+    </div>
+    <!-- Copyright -->
+
+</footer>
+<!-- Footer -->
+
+
+</body>
+</html>

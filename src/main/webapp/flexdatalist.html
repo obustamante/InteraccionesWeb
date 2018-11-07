@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prueba de jquery-Flexdatalist</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap_4/bootstrap.min.css" rel="stylesheet">
+    <link href="css/jquery_flexdatalist_2_2_4/jquery.flexdatalist.min.css" rel="stylesheet">
+
+    <!-- JS -->
+    <script src="js/jquery/jquery-3.3.1.min.js" language="JavaScript" type="text/javascript"></script>
+    <script src="js/jquery_flexdatalist_2_2_4/jquery.flexdatalist.js" language="JavaScript"
+            type="text/javascript"></script>
+    <script src="js/app/app.js"></script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Prueba de jQueryFlexdatalist</h1>
+    <hr>
+
+    <input type='text'
+           placeholder='Programming language name'
+           class='flexdatalist form-control'
+           data-min-length='1'
+           list='languages'
+           name='language'
+           id="txtLanguages">
+
+    <datalist id="languages">
+        <option value="PHP">PHP</option>
+        <option value="JavaScript">JavaScript</option>
+        <option value="Cobol">Cobol</option>
+        <option value="C#">C#</option>
+        <option value="C++">C++</option>
+        <option value="Java">Java</option>
+        <option value="Pascal">Pascal</option>
+        <option value="FORTRAN">FORTRAN</option>
+        <option value="Lisp">Lisp</option>
+        <option value="Swift">Swift</option>
+    </datalist>
+
+    <br>
+    <hr>
+
+    <input type="text"
+           class="flexdatalist form-control"
+           data-data="data/countries.json"
+           data-search-in="name"
+           data-min-length="1"
+           placeholder="Paises"
+           id="paises">
+
+    <br>
+    <hr>
+
+
+</div>
+
+
+</body>
+</html>

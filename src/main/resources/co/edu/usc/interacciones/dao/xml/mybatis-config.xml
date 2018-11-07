@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="org.postgresql.Driver"/>
+                <property name="url" value="jdbc:postgresql://localhost:5432/interacciones"/>
+                <property name="username" value="postgres"/>
+                <property name="password" value="123456"/>
+
+            </dataSource>
+        </environment>
+    </environments>
+
+    <mappers>
+
+        <!-- Inicio de tablas -->
+
+        <mapper resource="co/edu/usc/interacciones/dao/xml/ComponentesactivosMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/ComponentesMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/DrugbankMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/EfectosMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/EstadosMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/FabricImportMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/InteraccionescomponentesMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/MoleculasMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/MoleculasTargetsMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/PresentacionesMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/ProductosMoleculasMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/ProductosPresentacionesMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/RegistroFabricMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/RegistrossanitariosMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/TargetsMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/UnidadesmedidaMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/ViasMapper.xml"/>
+
+    </mappers>
+</configuration>

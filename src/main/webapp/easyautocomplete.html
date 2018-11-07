@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>easyautocomplete</title>
+
+    <!-- CSS -->
+    <link href="css/bootstrap_4/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/EasyAutocomplete-1.3.5/easy-autocomplete.min.css">
+
+    <!-- JS -->
+    <script src="js/jquery/jquery-3.3.1.min.js" language="JavaScript" type="text/javascript"></script>
+    <script src="js/EasyAutocomplete-1.3.5/jquery.easy-autocomplete.min.js"></script>
+
+    <!-- SCRIPT -->
+    <script>
+        $(function () {
+            var options = {
+
+                url: function (phrase) {
+                    return "http://localhost:8080/interaccionesWeb/rest/api/Medicamento/getMedicamento";
+                },
+
+                getValue: function (element) {
+                    return element.name;
+                },
+
+                ajaxSettings: {
+                    dataType: "json",
+                    method: "POST",
+                    data: {
+                        dataType: "json"
+                    }
+
+                },
+
+                preparePostData: function (data) {
+                    data.phrase = $("#example-ajax-post").val();
+                    return data;
+                },
+
+                requestDelay: 400
+            };
+
+            $("#example-ajax-post").easyAutocomplete(options);
+        });
+
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+    <h2>Prueba de easyautocomplete</h2>
+
+    <hr>
+    <br>
+
+    <input id="example-ajax-post"/>
+
+</div>
+</body>
+</html>

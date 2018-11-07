@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Prueba de jquery-Flexdatalist</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/bootstrap_4/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jquery_flexdatalist_2_2_4/jquery_flexdatalist_min.css">
+
+    <!-- JS -->
+    <script src="js/jquery/jquery-3.3.1.min.js" language="JavaScript" type="text/javascript"></script>
+    <script src="js/jquery_flexdatalist_2_2_4/jquery.flexdatalist.js" language="JavaScript"
+            type="text/javascript"></script>
+
+    <script>
+        $(function () {
+
+            $(".flexdatalist").flexdatalist({
+                minLength: 1
+            });
+
+            $('#medicamentos').on("change", function () {
+                console.log(this.value);
+            });
+
+            console.log('Página lista.');
+        })
+    </script>
+
+</head>
+<body>
+
+<div class="container">
+
+    <br>
+    <h2>Prueba de jQueryFlexdatalist - 2</h2>
+
+    <hr>
+    <br>
+
+    <input type="text"
+           class="flexdatalist form-control"
+           name="my_input"
+           data-url="http://localhost:8080/interaccionesWeb/rest/api2/Medicamento/getMedicamento"
+           datatype="json"
+           data-request-type="get"
+           data-min-length="1"
+           noResultsText='No se encontraron resultados para "{keyword}"'
+           placeholder="Medicamentos"
+           id="medicamentos">
+
+    <br>
+    <hr>
+
+</div>
+
+
+</body>
+</html>
