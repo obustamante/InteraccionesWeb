@@ -89,7 +89,7 @@ function agregarMedicamento() {
         if (status == "success") {
 
             console.log('---+---+---+---+---+---+---+---+---+---');
-            data.forEach(function (element) {
+            data.forEach(function(element) {
                 console.log(element);
 
                 //clearTable();

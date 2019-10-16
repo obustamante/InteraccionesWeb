@@ -136,7 +136,6 @@ public class MedicamentoService extends GenericService {
 
     /**
      * Compara los dedicamentos
-     *
      * @param data
      * @return
      */

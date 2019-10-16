@@ -1,8 +1,9 @@
 package co.edu.usc.interacciones.dao.model;
 
-import org.apache.ibatis.annotations.Param;
-
+import co.edu.usc.interacciones.dao.model.Registrossanitarios;
+import co.edu.usc.interacciones.dao.model.RegistrossanitariosExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface RegistrossanitariosMapper {
     /**
