@@ -5,6 +5,9 @@ import co.edu.usc.interacciones.dao.custom.model.FlexDataList;
 import co.edu.usc.interacciones.dao.model.*;
 import co.edu.usc.interacciones.utiles.DBUtils;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.apache.ibatis.session.SqlSession;
 
 import java.util.ArrayList;
@@ -72,20 +75,26 @@ public class MedicamentoService extends GenericService {
 
                 List<FiltroMedicamento> medicamentos = new ArrayList<>();
                 FiltroMedicamento medicamento;
-
+                /*
                 System.out.println("+-----+---------------+--------------------------------------------+-----------------------------+----------+");
                 System.out.println("|   # | Id Cod Invima |           Nombre del medicamento           |          Cod Invima         |   ATC    |");
                 System.out.println("+-----+---------------+--------------------------------------------+-----------------------------+----------+");
+                */
+                System.out.println("+-----+--------------------------------------------+-----------------------------+----------+");
+                System.out.println("|   # |           Nombre del medicamento           |          Cod Invima         |   ATC    |");
+                System.out.println("+-----+--------------------------------------------+-----------------------------+----------+");
 
                 int i = 1;
                 for (Registrossanitarios reg : registrossanitariosList) {
                     System.out.print("| ");
                     System.out.printf("%6s", i + " | ");
-                    System.out.printf("%16s", reg.getIdcodigoinvima() + "  | ");
+                    //System.out.printf("%16s", reg.getIdcodigoinvima() + "  | ");
                     System.out.printf("%45s", reg.getNombre() + " | ");
                     System.out.printf("%30s", reg.getCodigoinvima() + " | ");
 
-                    componentesactivosExample.createCriteria().andIdcodigoinvimaEqualTo(reg.getIdcodigoinvima());
+                    //componentesactivosExample.createCriteria().andIdcodigoinvimaEqualTo(reg.getIdcodigoinvima());
+                    componentesactivosExample.createCriteria().andRegistrossanitariosCodigoinvimaEqualTo(reg.getCodigoinvima());
+
                     componentesactivosList = componentesactivosMapper.selectByExample(componentesactivosExample);
 
                     if (componentesactivosList.size() != 0) {
@@ -100,7 +109,7 @@ public class MedicamentoService extends GenericService {
                     medicamento = new FiltroMedicamento();
                     medicamento.setAtc(componentesactivosList.get(0).getComponentesCodigoatc());
                     medicamento.setCodigoinvima(reg.getCodigoinvima());
-                    medicamento.setIdcodigoinvima(reg.getIdcodigoinvima());
+                    //medicamento.setIdcodigoinvima(reg.getIdcodigoinvima());
                     medicamento.setNombre(reg.getNombre());
                     medicamentos.add(medicamento);
 
@@ -108,7 +117,8 @@ public class MedicamentoService extends GenericService {
                         break;
                     }
                 }
-                System.out.println("+-----+---------------+--------------------------------------------+-----------------------------+----------+");
+                //System.out.println("+-----+---------------+--------------------------------------------+-----------------------------+----------+");
+                System.out.println("+-----+--------------------------------------------+-----------------------------+----------+");
                 System.out.print("\n");
 
                 //return registrossanitariosList;
@@ -124,13 +134,19 @@ public class MedicamentoService extends GenericService {
         return "No se encontraron medicamentos";
     }
 
-
+    /**
+     * Compara los dedicamentos
+     *
+     * @param data
+     * @return
+     */
     public Object getComparaMedicamento(Object data) {
-
 
         System.out.println("Entro a getComparaMedicamento(Object data);");
 
         System.out.println("data: " + data + "\n");
+
+        List<Componentesactivos> componentes = new ArrayList<>();
 
         try {
             SqlSession sqlSession = DBUtils.getSession();
@@ -138,15 +154,59 @@ public class MedicamentoService extends GenericService {
             GenericService service = new GenericService();
             Gson gson = service.getGson();
 
-            Componentesactivos componentesactivos = gson.fromJson((String) data, Componentesactivos.class);
+            if (data != null && !data.equals("")) {
 
+                JsonObject jsonObject = new JsonParser().parse(data.toString()).getAsJsonObject();
+                JsonArray arr = jsonObject.getAsJsonArray("codigoinvima");
 
+                Object data_;
+                @SuppressWarnings("UnusedAssignment") Componentesactivos componentesactivos = new Componentesactivos();
+                ComponentesactivosMapper componentesactivosMapper = sqlSession.getMapper(ComponentesactivosMapper.class);
+
+                List<Componentesactivos> componentesactivosList;
+
+                for (int i = 0; i < arr.size(); i++) {
+                    data_ = "{registrossanitariosCodigoinvima:" + arr.get(i) + "}";
+                    System.out.println(data_);
+
+                    componentesactivos = gson.fromJson((String) data_, Componentesactivos.class);
+
+                    //System.out.println("\nLuego de 'gson.fromJson((String) data'");
+                    System.out.println("Codigoinvima: " + componentesactivos.getRegistrossanitariosCodigoinvima() + " - ATC: " + componentesactivos.getComponentesCodigoatc());
+
+                    System.out.println("Cod invima a buscar:");
+                    System.out.println(componentesactivos.getRegistrossanitariosCodigoinvima());
+
+                    ComponentesactivosExample componentesactivosExample = new ComponentesactivosExample();
+                    componentesactivosExample.createCriteria().andRegistrossanitariosCodigoinvimaEqualTo(componentesactivos.getRegistrossanitariosCodigoinvima());
+                    componentesactivosList = componentesactivosMapper.selectByExample(componentesactivosExample);
+
+                    System.out.println("componentesactivosList : " + componentesactivosList.size());
+
+                    for (Componentesactivos com : componentesactivosList) {
+                        System.out.println("INVIMA: " + com.getRegistrossanitariosCodigoinvima());
+                        System.out.println("ATC: " + com.getComponentesCodigoatc());
+                        System.out.println(" ");
+                        componentesactivos.setComponentesCodigoatc(com.getComponentesCodigoatc());
+                    }
+                    System.out.println("R//: Codigoinvima: " + componentesactivos.getRegistrossanitariosCodigoinvima() + " - ATC: " + componentesactivos.getComponentesCodigoatc() + "\n");
+                    componentes.add(componentesactivos);
+                }
+            }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
 
+        System.out.println("\n**********************************************************************\n\nEnviando resultado ...\n");
+        int c_ = 1;
+        for (Componentesactivos com : componentes) {
+            System.out.println(c_ + ". INVIMA: " + com.getRegistrossanitariosCodigoinvima());
+            System.out.println("ATC: " + com.getComponentesCodigoatc());
+            System.out.println(" ");
+            c_++;
+        }
 
-        return null;
+        return componentes;
     }
 }
 
