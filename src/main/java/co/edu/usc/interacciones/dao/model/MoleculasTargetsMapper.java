@@ -1,8 +1,9 @@
 package co.edu.usc.interacciones.dao.model;
 
-import org.apache.ibatis.annotations.Param;
-
+import co.edu.usc.interacciones.dao.model.MoleculasTargets;
+import co.edu.usc.interacciones.dao.model.MoleculasTargetsExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface MoleculasTargetsMapper {
     /**

@@ -1,9 +1,10 @@
 package co.edu.usc.interacciones.dao.model;
 
-import org.apache.ibatis.annotations.Param;
-
+import co.edu.usc.interacciones.dao.model.Vias;
+import co.edu.usc.interacciones.dao.model.ViasExample;
 import java.math.BigDecimal;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface ViasMapper {
     /**

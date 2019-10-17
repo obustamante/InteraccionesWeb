@@ -1,8 +1,9 @@
 package co.edu.usc.interacciones.dao.model;
 
-import org.apache.ibatis.annotations.Param;
-
+import co.edu.usc.interacciones.dao.model.MedicamentosVigentes;
+import co.edu.usc.interacciones.dao.model.MedicamentosVigentesExample;
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface MedicamentosVigentesMapper {
     /**
