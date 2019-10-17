@@ -29,6 +29,7 @@
         <mapper resource="co/edu/usc/interacciones/dao/xml/EfectosMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/EstadosMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/FabricImportMapper.xml"/>
+        <mapper resource="co/edu/usc/interacciones/dao/xml/InteraccionesMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/InteraccionescomponentesMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/MoleculasMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/MoleculasTargetsMapper.xml"/>
