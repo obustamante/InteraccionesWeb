@@ -494,3 +494,5 @@ obj/
 !/gradle/wrapper/gradle-wrapper.jar
 
 # End of https://www.gitignore.io/api/git,java,linux,macos,gradle,dropbox,windows,eclipse,android,java-web,netbeans,code-java,androidstudio,intellij,osx
+/gradle/wrapper/gradle-wrapper.properties
+/settings.gradle
