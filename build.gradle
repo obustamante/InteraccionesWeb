@@ -37,3 +37,7 @@ dependencies {
 
     compile files ('libs/postgresql-42.2.1.jre6.jar')
 }
+
+war {
+    archiveName = 'InteraccionesWeb.war'
+}

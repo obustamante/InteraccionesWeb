@@ -41,6 +41,8 @@
         <mapper resource="co/edu/usc/interacciones/dao/xml/TargetsMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/UnidadesmedidaMapper.xml"/>
         <mapper resource="co/edu/usc/interacciones/dao/xml/ViasMapper.xml"/>
+        <!-- Consultas personalizadas -->
+        <mapper class="co.edu.usc.interacciones.dao.custom.mapper.MedicamentoCustomMapper"/>
 
     </mappers>
 </configuration>

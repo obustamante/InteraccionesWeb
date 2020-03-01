@@ -146,4 +146,13 @@ public class Interaccionescomponentes implements Serializable {
         result = prime * result + ((getIdinteracciones() == null) ? 0 : getIdinteracciones().hashCode());
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Interaccionescomponentes{" +
+                "idinteracciones=" + idinteracciones + '\'' +
+                ", componentea='" + componentea + '\'' +
+                ", componenteb='" + componenteb +
+                '}';
+    }
 }

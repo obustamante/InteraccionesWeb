@@ -78,8 +78,8 @@ public class Api {
                             .header("Access-Control-Allow-Headers", "origin, content-type, accept, x-auth")
                             .header("Pragma", "no-cache")
                             .type(responseType)
-                            //.entity(gsonEncoder.toJson("results:"+med.toString())).build();
-                            .entity(med).build();
+                            .entity(gsonEncoder.toJson(med)).build();
+                            //.entity(med).build();
   /*
                     result.setResults(medicamentoService.getMedicamento(data));
                     result.setData(medicamentoService.getMedicamento(data));

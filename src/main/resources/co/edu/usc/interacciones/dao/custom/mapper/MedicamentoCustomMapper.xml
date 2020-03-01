@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/tdt/mybatis-3-mapper.dtd" >
+<mapper namespace="co.edu.usc.interacciones.dao.custom.mapper.MedicamentoCustomMapper">
+
+    <!-- ======================================================================================================= -->
+    <select id="getInfoMedicamento"
+            parameterType="co.edu.usc.interacciones.dao.custom.helper.FiltroMedicamento"
+            resultType="co.edu.usc.interacciones.dao.custom.model.ResumenMedicamento">
+
+        SELECT rs.nombre as nombre,
+               rs.codigoinvima as codInvima,
+               ca.componentes_codigoatc as codigoAtc
+        from componentesactivos ca
+        inner join registrossanitarios rs
+        on ca.registrossanitarios_codigoinvima = rs.codigoinvima
+        where ca.registrossanitarios_codigoinvima = #{invima}
+
+    </select>
+</mapper>
