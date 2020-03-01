@@ -102,7 +102,7 @@ function agregarMedicamento() {
              */
 
             //console.log(medList.get(0));
-            medList.forEach(function(element) {
+            medList.forEach(function (element) {
                 console.log(element);
 
                 //clearTable();
@@ -113,11 +113,9 @@ function agregarMedicamento() {
                 var codigoAtc = element.codigoAtc;
 
 
-
-                $('#tablaMedicamentos >tbody:last-child').append("<tr><td> " + cont_ + $('#prueba').val() + "</td><td>" + nombre + " [" + codigoInvima + "]</td><td>" + codigoAtc + "</td> </tr>");
+                $('#tablaMedicamentos >tbody:last-child').append("<tr><td> " + cont_ + $('#prueba').val() + "</td><td>" + nombre + "</td><td>" + codigoInvima + "</td><td>" + codigoAtc + "</td> </tr>");
 
             });
-
 
 
             console.log('---+---+---+---+---+---+---+---+---+---');
