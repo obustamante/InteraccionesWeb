@@ -426,7 +426,7 @@ public class RegistrossanitariosExample {
      * @mbggenerated
      */
     public static class Criterion {
-        private String condition;
+        private final String condition;
 
         private Object value;
 
@@ -440,7 +440,7 @@ public class RegistrossanitariosExample {
 
         private boolean listValue;
 
-        private String typeHandler;
+        private final String typeHandler;
 
         public String getCondition() {
             return condition;

@@ -19,7 +19,7 @@ import java.util.Date;
 public class Api2 {
 
     private Object responseContent = null;
-    private MediaType responseType = MediaType.APPLICATION_JSON_TYPE;
+    private final MediaType responseType = MediaType.APPLICATION_JSON_TYPE;
     private Result result;
     private Gson gsonEncoder;
 
@@ -152,6 +152,6 @@ public class Api2 {
             return input;
         }
 
-        return input.substring(0, 1).toUpperCase().concat(input.substring(1, input.length()));
+        return input.substring(0, 1).toUpperCase().concat(input.substring(1));
     }
 }

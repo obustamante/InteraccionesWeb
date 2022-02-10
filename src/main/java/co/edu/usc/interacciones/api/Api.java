@@ -17,7 +17,7 @@ import javax.ws.rs.core.Response;
 @Path("/api")
 public class Api {
 
-    private MediaType responseType = MediaType.APPLICATION_JSON_TYPE;
+    private final MediaType responseType = MediaType.APPLICATION_JSON_TYPE;
     private Result result;
 
     @GET
@@ -105,7 +105,7 @@ public class Api {
             return input;
         }
 
-        return input.substring(0, 1).toUpperCase().concat(input.substring(1, input.length()));
+        return input.substring(0, 1).toUpperCase().concat(input.substring(1));
     }
 
 }

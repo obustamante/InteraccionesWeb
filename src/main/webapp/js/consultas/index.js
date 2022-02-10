@@ -47,10 +47,10 @@ function agregarMedicamento() {
 
     var invima = $('#prueba').val();
 
-    console.log('Medicamento a adicionar: ' + invima);
+    console.log('Medicamento a adicionar: ' + invima.toUpperCase());
     console.log(' ');
 
-    codigos.push(invima);
+    codigos.push(invima.toUpperCase());
 
     /*
     console.log('Listado de códigos INVIMA:');
@@ -153,7 +153,7 @@ function clearInput() {
 function clearTable() {
     console.log('Limpiar tabla...');
     $("#tbodyMedicamentos").empty();
-    $('#tablaMedicamentos >tbody:last-child').append("<tr><td></td><td></td><td></td></tr>");
+    $('#tablaMedicamentos >tbody:last-child').append("<tr><td></td><td></td><td></td><td></td></tr>");
 
     cont = 0;
     codigos = [];
